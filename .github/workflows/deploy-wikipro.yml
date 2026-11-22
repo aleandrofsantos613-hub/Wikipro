@@ -33,7 +33,7 @@ jobs:
 
           unzip -o "WikiPro-Nova.zip" -d _site_extracted
 
-          cp -a extracted/wikipro/. _site/
+          cp -a "_site_extracted/wikipro/." "_site/"
 
           python3 - <<'PY'
           from pathlib import Path
