@@ -31,7 +31,7 @@ jobs:
           rm -rf _site extracted
           mkdir -p _site extracted
 
-          unzip -q WikiPro–Nova.zip -d extracted
+          unzip -o "WikiPro-Nova.zip" -d _site_extracted
 
           cp -a extracted/wikipro/. _site/
 
