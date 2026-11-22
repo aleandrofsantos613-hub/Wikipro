@@ -5,7 +5,7 @@ on:
   push:
     branches: ["main"]
     paths:
-      - "WikiPro.zip"
+      - "WikiProNova.zip"
       - ".github/workflows/deploy-wikipro.yml"
   workflow_dispatch:
 
@@ -31,7 +31,7 @@ jobs:
           rm -rf _site extracted
           mkdir -p _site extracted
 
-          unzip -q WikiPro.zip -d extracted
+          unzip -q WikiProNova.zip -d extracted
 
           cp -a extracted/wikipro/. _site/
 
