@@ -27,14 +27,30 @@ jobs:
 
       - name: Preparar site
         run: |
+          set -euo pipefail
+
           rm -rf _site _site_extracted
           mkdir -p _site _site_extracted
+
           unzip -q "WikiPro-Nova.zip" -d _site_extracted
+
+          test -d _site_extracted/wikipro
           cp -a _site_extracted/wikipro/. _site/
+
+          echo "Verificando arquivos do site..."
           test -f _site/index.html
+
+          echo "Verificando imagens dos níveis..."
           test -f _site/images/nivel-1/pagina-1.png
           test -f _site/images/nivel-1/pagina-2.png
           test -f _site/images/nivel-1/pagina-3.png
+
+          echo "Verificando imagens das dificuldades..."
+          test -f _site/images/dificuldade/0.webp
+          test -f _site/images/dificuldade/1.webp
+
+          echo "Arquivos que serão publicados:"
+          find _site/images/dificuldade -maxdepth 1 -type f
 
       - name: Configurar Pages
         uses: actions/configure-pages@v5
@@ -54,4 +70,3 @@ jobs:
       - name: Publicar
         id: deployment
         uses: actions/deploy-pages@v4
-        
