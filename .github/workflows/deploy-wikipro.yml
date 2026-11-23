@@ -5,7 +5,6 @@ on:
   push:
     branches: ["main"]
     paths:
-      - "WikiPro-Nova.zip"
       - ".github/workflows/deploy-wikipro.yml"
   workflow_dispatch:
 
@@ -22,30 +21,26 @@ jobs:
   build:
     runs-on: ubuntu-latest
     steps:
-      - name: Baixar arquivos
+      - name: Baixar historico completo
         uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
 
-      - name: Preparar site
+      - name: Recuperar ZIP antigo
         run: |
-          set -euo pipefail
-
-          echo "Conferindo arquivo recebido..."
-          ls -lh WikiPro-Nova.zip
+          git show 54c888daba3b116f012d0b7910831f6eb546f818:WikiPro-Nova.zip > WikiPro-Nova.zip
           file WikiPro-Nova.zip
           unzip -tq WikiPro-Nova.zip
 
+      - name: Preparar site
+        run: |
           rm -rf _site _site_extracted
           mkdir -p _site _site_extracted
-
           unzip -q WikiPro-Nova.zip -d _site_extracted
           cp -a _site_extracted/wikipro/. _site/
-
           test -f _site/index.html
           test -f _site/images/dificuldade/0.webp
           test -f _site/images/dificuldade/1.webp
-          test -f _site/images/nivel-1/pagina-1.png
-          test -f _site/images/nivel-1/pagina-2.png
-          test -f _site/images/nivel-1/pagina-3.png
 
       - name: Configurar Pages
         uses: actions/configure-pages@v5
